@@ -7,15 +7,34 @@
 
     <style>
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
-            background: #f4f6f9;
+            background: linear-gradient(-45deg, red, orange);
+            background-size: 400% 400%;
+            animation: fireFade 10s ease infinite;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 20px;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        @keyframes fireFade {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         h1 {
+            color: white;
             margin-bottom: 10px;
         }
 
@@ -27,18 +46,22 @@
         }
 
         .scroll-container {
-            width: 320px;
+            width: 100%;
+            max-width: 320px;
             height: 400px;
-            overflow-y: scroll;
+            overflow-y: auto;
             border: 2px solid #ccc;
             border-radius: 8px;
             background: white;
             padding: 10px;
+            box-sizing: border-box;
         }
 
         .btn {
             display: block;
             width: 100%;
+            box-sizing: border-box;
+
             padding: 12px;
             margin-bottom: 8px;
             border: none;
@@ -55,19 +78,67 @@
                 transform: translateY(-2px);
                 box-shadow: 0 5px 12px rgba(0,0,0,0.2);
             }
+
+        .crossed-text {
+            position: relative;
+            opacity: 0.6;
+        }
+
+            .crossed-text::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: 100%;
+                height: 2px;
+                background: red;
+                transform: translateY(-50%);
+            }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 25px;
+            padding: 30px 35px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .name-link {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+            .name-link:hover {
+                color: cyan;
+                text-shadow: 0 0 8px cyan;
+            }
     </style>
 </head>
 
 <body>
+    <div class="card">
+        <h1>
+            <a href="https://guns.lol/ciperuoy" target="_blank" class="name-link">ciperuoy</a>'s school
+            <span class="crossed-text">tips</span>
+            games
+        </h1>
 
-    <h1>ci's school GAMES</h1>
+        <input type="text" id="searchBar" placeholder="Search games...">
 
-    <input type="text" id="searchBar" placeholder="Search websites...">
-
-    <div class="scroll-container">
-        <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bloxd')">BLOXD.IO</button>
-        <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/tetris')">Tetris (unfunctional)</button>
-        <button class="btn" onclick="goTo('https://example.com')">Placeholder</button>
+        <div class="scroll-container">
+            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bloxd')">Bloxd.io</button>
+            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/tetris')">Tetris (unfunctional)</button>
+            <button class="btn" onclick="goTo('https://slither.io')">Slither.io</button>
+            <button class="btn" onclick="goTo('https://zombs.io')">Zombs.io</button>
+            <button class="btn" onclick="goTo('https://agar.io')">Agar.io</button>
+        </div>
     </div>
 
     <script>
@@ -76,6 +147,20 @@
         }
 
         const searchBar = document.getElementById("searchBar");
+        const container = document.querySelector(".scroll-container");
+
+        function sortButtons() {
+            const buttons = Array.from(container.querySelectorAll(".btn"));
+
+            buttons.sort((a, b) => {
+                return a.textContent.localeCompare(b.textContent);
+            });
+
+            buttons.forEach(button => container.appendChild(button));
+        }
+
+        sortButtons();
+
         const buttons = document.querySelectorAll(".btn");
 
         searchBar.addEventListener("keyup", function () {
