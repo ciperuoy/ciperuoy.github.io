@@ -138,14 +138,25 @@
                 box-shadow: 0 0 8px cyan;
                 opacity: 1;
             }
+
+        .name-link {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+            .name-link:hover {
+                color: cyan;
+                text-shadow: 0 0 8px cyan;
+            }
     </style>
 </head>
 
 <body>
 
     <div class="card">
-        <h1>ciperuoy's school tips</h1>
-        <p>THIS WHOLE WEBSITE IS CREATED BY CHATGPT!!</p>
+        <h1><a href="https://guns.lol/ciperuoy" target="_blank" class="name-link">ciperuoy</a>'s school tips</h1>
+        <p id="randomDesc"></p>
 
         <div class="buttons">
             <button onclick="goToWebsite('https://www.ixl.com')">IXL</button>
@@ -159,12 +170,32 @@
         function goToSubdomain(sub) {
             window.location.href = "https://ciperuoy.github.io/" + sub;
         }
-    </script>
 
-    <script>
         function goToWebsite(url) {
             window.location.href = url;
         }
+
+        const descriptions = [
+            "THIS WHOLE WEBSITE IS CREATED BY CHATGPT!!",
+            "no way ts would get blocked lmfaooo",
+            "do your science homework brodie",
+            "dont pull out your phone in front of the teachers...",
+            "chatgpt made",
+            "educational i think",
+            "ciperuoy is yourepic backwards",
+            "u werent supposed to find this",
+            "u got ts kiddo",
+            "KEEP PUSHING!!",
+            "oh noo oh noooow0od0oojdwajodjodawjok",
+            "ur tuff twin",
+            "u not slick twin ik u js blew one",
+            "let me guess, ur not here for the education",
+        ];
+
+        const descElement = document.getElementById("randomDesc");
+        const randomIndex = Math.floor(Math.random() * descriptions.length);
+
+        descElement.textContent = descriptions[randomIndex];
     </script>
 
 </body>
