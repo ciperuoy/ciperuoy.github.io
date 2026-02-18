@@ -15,8 +15,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            flex-direction: column;
+            min-height: 100vh;
         }
 
         @keyframes fireFade {
@@ -33,50 +32,43 @@
             }
         }
 
+        /* Wrapper */
+        .wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Card */
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 25px;
+            padding: 30px 35px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25), 0 0 25px rgba(255,120,0,0.6);
+        }
+
+        /* Title */
         h1 {
             color: white;
-            margin-bottom: 10px;
-        }
-
-        #searchBar {
-            width: 300px;
-            padding: 8px;
             margin-bottom: 15px;
-            font-size: 16px;
         }
 
-        .scroll-container {
-            width: 100%;
-            max-width: 320px;
-            height: 400px;
-            overflow-y: auto;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            background: white;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-
-            padding: 12px;
-            margin-bottom: 8px;
-            border: none;
-            border-radius: 999px;
-            background: linear-gradient(135deg, #4CAF50, #2E8B57);
+        .name-link {
             color: white;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            text-decoration: none;
+            transition: 0.3s ease;
         }
 
-            .btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+            .name-link:hover {
+                color: cyan;
+                text-shadow: 0 0 8px cyan;
             }
 
         .crossed-text {
@@ -95,61 +87,152 @@
                 transform: translateY(-50%);
             }
 
-        .card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* Search */
+        #searchBar {
+            width: 300px;
+            padding: 12px 18px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border-radius: 999px;
+            border: none;
+            outline: none;
+        }
+
+        /* Scroll container */
+        .scroll-container {
+            width: 100%;
+            max-width: 320px;
+            height: 400px;
+            overflow-y: auto;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 20px;
+            background: transparent;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: none;
+            border-radius: 999px;
+            background: white;
+            color: #333;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.15s ease;
+        }
+
+            .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+            }
+
+        /* Announcement Box */
+        .announcement-box {
+            position: absolute;
+            left: 100%;
+            margin-left: 40px;
+            width: 320px;
+            height: 460px;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border-radius: 25px;
-            padding: 30px 35px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-        }
-
-        .name-link {
+            padding: 25px;
             color: white;
-            text-decoration: none;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            display: flex;
+            flex-direction: column;
         }
 
-            .name-link:hover {
-                color: cyan;
-                text-shadow: 0 0 8px cyan;
+            /* Text & Content */
+            .announcement-box h2 {
+                margin-top: 0;
+                margin-bottom: 10px;
             }
+
+        #announcementContent {
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        /* Image that fills remaining space */
+        .announcement-image {
+            margin-top: 12px;
+            width: 100%;
+            flex-grow: 1;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+
+        /* Mobile: stack under */
+        @media (max-width: 1100px) {
+            .announcement-box {
+                position: static;
+                margin-left: 0;
+                margin-top: 30px;
+                width: 100%;
+            }
+
+            .wrapper {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div class="card">
-        <h1>
-            <a href="https://guns.lol/ciperuoy" target="_blank" class="name-link">ciperuoy</a>'s school
-            <span class="crossed-text">tips</span>
-            games
-        </h1>
 
-        <input type="text" id="searchBar" placeholder="Search games...">
+    <div class="wrapper">
 
-        <div class="scroll-container">
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bloxd')">Bloxd.io</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/tetris')">Tetris</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/slither')">Slither.io</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/zombs')">Zombs.io</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/amongus')">Among Us</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/smallwc')">Small World Cup</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/driftboss')">Drift Boss</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bitlife')">BitLife</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/e1.8.8')">EaglerCraft 1.8.8</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/deathrun3d')">Death Run 3D</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/slope')">Slope</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/gdash')">Geometry Dash</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/gdsubzero')">GD Subzero</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/totm')">Tomb of The Mask</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/fnaf1')">FNAF 1</button>
-            <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/fnaf1')">Block Blast</button>
+        <div class="card">
+
+            <h1>
+                <a href="https://guns.lol/ciperuoy" target="_blank" class="name-link">ciperuoy</a>'s school
+                <span class="crossed-text">tips</span>
+                games
+            </h1>
+
+            <input type="text" id="searchBar" placeholder="Search games...">
+
+            <div class="scroll-container">
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/amongus')">Among Us</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bitlife')">BitLife</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/blockblast')">Block Blast</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bloxd')">Bloxd.io</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/deathrun3d')">Death Run 3D</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/driftboss')">Drift Boss</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/e1.8.8')">EaglerCraft 1.8.8</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/fnaf1')">FNAF 1</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/gdash')">Geometry Dash</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/gdsubzero')">GD Subzero</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/slope')">Slope</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/slither')">Slither.io</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/smallwc')">Small World Cup</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/tetristg')">Tetris TenGen</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/totm')">Tomb of The Mask</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/zombs')">Zombs.io</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/chromedino')">Chrome Dino</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/tetris')">Tetris</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bloxycross')">BloxyCross</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bloxypot')">BloxyPot</button>
+                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/kirka')">Kirka.io</button>
+            </div>
+
         </div>
+
+        <div class="announcement-box">
+            <h2>📢 Announcements</h2>
+            <div id="announcementContent">Loading announcements...</div>
+            <img src="https://raw.githubusercontent.com/ciperuoy/ciperuoy.github.io/main/games/thumbsup.png" class="announcement-image">
+        </div>
+
     </div>
 
     <script>
@@ -157,35 +240,29 @@
             window.open(url, "_blank");
         }
 
-        const searchBar = document.getElementById("searchBar");
+        /* Sort buttons */
         const container = document.querySelector(".scroll-container");
+        const buttons = Array.from(container.querySelectorAll(".btn"));
+        buttons.sort((a, b) => a.textContent.localeCompare(b.textContent));
+        buttons.forEach(btn => container.appendChild(btn));
 
-        function sortButtons() {
-            const buttons = Array.from(container.querySelectorAll(".btn"));
-
-            buttons.sort((a, b) => {
-                return a.textContent.localeCompare(b.textContent);
-            });
-
-            buttons.forEach(button => container.appendChild(button));
-        }
-
-        sortButtons();
-
-        const buttons = document.querySelectorAll(".btn");
-
-        searchBar.addEventListener("keyup", function () {
-            const filter = searchBar.value.toLowerCase();
-
-            buttons.forEach(button => {
-                const text = button.textContent.toLowerCase();
-                if (text.includes(filter)) {
-                    button.style.display = "block";
-                } else {
-                    button.style.display = "none";
-                }
+        /* Search */
+        document.getElementById("searchBar").addEventListener("keyup", function () {
+            const filter = this.value.toLowerCase();
+            document.querySelectorAll(".btn").forEach(button => {
+                button.style.display = button.textContent.toLowerCase().includes(filter) ? "block" : "none";
             });
         });
+
+        /* Fetch announcements */
+        fetch("https://raw.githubusercontent.com/ciperuoy/ciperuoy.github.io/main/games/announcements.txt")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("announcementContent").textContent = data;
+            })
+            .catch(() => {
+                document.getElementById("announcementContent").textContent = "No announcements available.";
+            });
     </script>
 
 </body>
