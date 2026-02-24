@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Flip Betting</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #111, #333);
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .container {
+            background: #222;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.6);
+            width: 340px;
+            text-align: center;
+        }
+
+        .balance-bar {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .coin-wrapper {
+            perspective: 1000px;
+        }
+
+        .coin {
+            width: 130px;
+            height: 130px;
+            margin: 20px auto;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: gold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: bold;
+            backface-visibility: hidden;
+            border: 4px solid #c9a227;
+        }
+
+        .tails {
+            transform: rotateY(180deg);
+        }
+
+        button {
+            padding: 8px 14px;
+            font-size: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: gold;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+            button:hover {
+                background: #e6c200;
+            }
+
+        .choice-btn {
+            margin: 5px;
+        }
+
+        .selected {
+            background-color: #00cc44;
+            color: white;
+        }
+
+        input {
+            padding: 8px;
+            width: 80%;
+            margin-top: 10px;
+            border-radius: 6px;
+            border: none;
+            text-align: center;
+        }
+
+        #result {
+            margin-top: 15px;
+            min-height: 24px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="balance-bar">
+            <div>Coin Flip Betting</div>
+            <div>Balance: $<span id="balance">100</span></div>
+        </div>
+
+        <div class="coin-wrapper">
+            <div class="coin" id="coin">
+                <div class="side">HEADS</div>
+                <div class="side tails">TAILS</div>
+            </div>
+        </div>
+
+        <input type="number" id="betAmount" placeholder="Enter bet amount" min="1" step="1">
+
+        <div>
+            <button id="headsBtn" onclick="chooseSide('HEADS')">HEADS</button>
+            <button id="tailsBtn" onclick="chooseSide('TAILS')">TAILS</button>
+        </div>
+
+        <button onclick="flip()">Flip Coin</button>
+
+        <div id="result"></div>
+
+    </div>
+
+    <script>
+        let balance = 100;
+        let chosenSide = null;
+        let busy = false;
+
+        function secureRandom() {
+            const array = new Uint32Array(1);
+            window.crypto.getRandomValues(array);
+            return array[0] / 4294967295;
+        }
+
+        function chooseSide(side) {
+            if (busy) return;
+
+            chosenSide = side;
+
+            document.getElementById("headsBtn").classList.remove("selected");
+            document.getElementById("tailsBtn").classList.remove("selected");
+
+            if (side === "HEADS") {
+                document.getElementById("headsBtn").classList.add("selected");
+            } else {
+                document.getElementById("tailsBtn").classList.add("selected");
+            }
+        }
+
+        function flip() {
+            if (busy) return;
+
+            const betInput = document.getElementById("betAmount");
+            const bet = parseInt(betInput.value);
+            const resultText = document.getElementById("result");
+            const coin = document.getElementById("coin");
+
+            if (balance <= 0) {
+                resultText.textContent = "No balance remaining.";
+                return;
+            }
+
+            if (!chosenSide) {
+                resultText.textContent = "Choose HEADS or TAILS.";
+                return;
+            }
+
+            if (!bet || bet <= 0 || !Number.isInteger(bet)) {
+                resultText.textContent = "Enter a valid whole number bet.";
+                return;
+            }
+
+            if (bet > balance) {
+                resultText.textContent = "Not enough balance.";
+                return;
+            }
+
+            busy = true;
+            resultText.textContent = "";
+
+            // Decide result now but DO NOT reveal yet
+            const isHeads = secureRandom() < 0.5;
+            const resultSide = isHeads ? "HEADS" : "TAILS";
+
+            let currentRotation = 0;
+
+            // Fast spinning phase
+            coin.style.transition = "transform 0.1s linear";
+
+            const spinInterval = setInterval(function () {
+                currentRotation += 180;
+                coin.style.transform = "rotateY(" + currentRotation + "deg)";
+            }, 100);
+
+            // After suspense time, stop and land properly
+            setTimeout(function () {
+
+                clearInterval(spinInterval);
+
+                const spins = Math.floor(secureRandom() * 4) + 3;
+                const finalAngle = currentRotation + spins * 360 + (isHeads ? 0 : 180);
+
+                coin.style.transition = "transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1)";
+                coin.style.transform = "rotateY(" + finalAngle + "deg)";
+
+                setTimeout(function () {
+
+                    if (resultSide === chosenSide) {
+                        balance += bet;
+                        resultText.textContent = "You won $" + bet + ". Result: " + resultSide;
+                    } else {
+                        balance -= bet;
+                        resultText.textContent = "You lost $" + bet + ". Result: " + resultSide;
+                    }
+
+                    document.getElementById("balance").textContent = balance;
+
+                    betInput.value = "";
+                    chosenSide = null;
+                    document.getElementById("headsBtn").classList.remove("selected");
+                    document.getElementById("tailsBtn").classList.remove("selected");
+
+                    busy = false;
+
+                }, 1500);
+
+            }, 2000); // suspense duration
+        }
+    </script>
+</body>
+</html>

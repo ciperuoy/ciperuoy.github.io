@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Menu</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: white;
+        }
+
+        /* Toolbar */
+        #toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90px; /* slightly taller for balance display */
+            background: #1c1c1c;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 2px solid #333;
+        }
+
+        /* Top row inside toolbar */
+        #toolbarTop {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Left dropdown container */
+        #leftMenu {
+            position: absolute;
+            left: 20px;
+            display: flex;
+        }
+
+        /* Right login container */
+        #rightMenu {
+            position: absolute;
+            right: 20px;
+        }
+
+        /* Rounded buttons */
+        button,
+        .dropbtn {
+            border-radius: 14px;
+            border: none;
+            padding: 10px 16px;
+            background: #2a2a2a;
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+            button:hover,
+            .dropbtn:hover {
+                background: #444;
+            }
+
+            button:active,
+            .dropbtn:active {
+                transform: scale(0.96);
+            }
+
+        /* Dropdown container */
+        .dropdown {
+            position: relative;
+            margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            background: #2a2a2a;
+            min-width: 160px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            top: 100%;
+            left: 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+            .dropdown-content a,
+            .dropdown-content button {
+                display: block;
+                padding: 10px;
+                color: white;
+                text-decoration: none;
+                background: none;
+                border: none;
+                width: 100%;
+                text-align: left;
+            }
+
+                .dropdown-content a:hover,
+                .dropdown-content button:hover {
+                    background: #444;
+                }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Center title */
+        #centerTitle h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: normal;
+        }
+
+        #nameLink {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.4s ease;
+        }
+
+            #nameLink:hover {
+                color: #3399ff;
+            }
+
+        /* Balance display */
+        #balanceDisplay {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 16px;
+            color: #aaa;
+        }
+
+        #balanceAmount {
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+
+        /* Adjust main for taller toolbar */
+        #main {
+            height: calc(100vh - 90px);
+            margin-top: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #contentWrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+
+        #gamesContainer {
+            display: grid;
+            grid-template-columns: repeat(2, 340px);
+            grid-template-rows: repeat(2, 150px);
+            gap: 30px;
+        }
+
+        .gameBtn {
+            width: 340px;
+            height: 150px;
+            font-size: 24px;
+            border-radius: 22px;
+            background: #222;
+            border: 2px solid #333;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .gameBtn:hover {
+                background: #2f2f2f;
+                transform: translateY(-6px);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            }
+
+            .gameBtn:active {
+                transform: scale(0.96);
+            }
+
+        #announcementBox {
+            width: 420px;
+            height: 330px;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 22px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+            #announcementBox h3 {
+                margin: 0 0 15px 0;
+                font-size: 22px;
+                font-weight: normal;
+            }
+
+        #announcementContent {
+            overflow-y: auto;
+            font-size: 20px;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="toolbar">
+
+        <div id="toolbarTop">
+
+            <div id="leftMenu">
+                <div class="dropdown">
+                    <button class="dropbtn">Games</button>
+                    <div class="dropdown-content">
+                        <button onclick="goToPage('coinflip.html')">Coin Flip</button>
+                        <button onclick="goToPage('blackjack.html')">Blackjack</button>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Account</button>
+                    <div class="dropdown-content">
+                        <a href="#">Profile</a>
+                        <a href="#">Balance</a>
+                        <a href="#">Logout</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="centerTitle">
+                <h1>
+                    <a href="https://guns.lol/ciperuoy" target="_blank" id="nameLink">
+                        ciperuoy's
+                    </a> wagering
+                </h1>
+            </div>
+
+            <div id="rightMenu">
+                <button onclick="goToPage('login.html')">Login</button>
+            </div>
+
+        </div>
+
+        <!-- Balance under title -->
+        <div id="balanceDisplay">
+            Balance: $<span id="balanceAmount">10</span>
+        </div>
+
+    </div>
+
+    <div id="main">
+        <div id="contentWrapper">
+
+            <div id="gamesContainer">
+                <button class="gameBtn" onclick="goToPage('coinflip.html')">Coin Flip</button>
+                <button class="gameBtn" onclick="goToPage('blackjack.html')">Blackjack</button>
+                <button class="gameBtn" onclick="goToPage('roulette.html')">Roulette</button>
+                <button class="gameBtn" onclick="goToPage('slots.html')">Slots</button>
+            </div>
+
+            <div id="announcementBox">
+                <h3>Announcement</h3>
+                <div id="announcementContent">
+                    Loading...
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function goToPage(link) {
+            window.location.href = link;
+        }
+    </script>
+
+</body>
+</html>
