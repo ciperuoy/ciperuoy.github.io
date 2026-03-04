@@ -1,109 +1,37 @@
-<!DOCTYPE html>
-<html>
 <head>
-    <meta charset="UTF-8">
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            background: black;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-    </style>
-</head>
-<body>
-
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1ZCLH6XCR"></script>
     <script>
-        // Minimal BPS patcher implementation
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-        function decodeVarInt(data, offsetObj) {
-            let result = 0, shift = 1;
-            while (true) {
-                let byte = data[offsetObj.offset++];
-                result += (byte & 0x7f) * shift;
-                if (byte & 0x80) break;
-                shift <<= 7;
-                result += shift;
-            }
-            return result;
-        }
-
-        function applyBPS(rom, patch) {
-            let offsetObj = { offset: 4 }; // skip "BPS1"
-
-            let sourceSize = decodeVarInt(patch, offsetObj);
-            let targetSize = decodeVarInt(patch, offsetObj);
-            let metaSize = decodeVarInt(patch, offsetObj);
-
-            offsetObj.offset += metaSize;
-
-            let output = new Uint8Array(targetSize);
-            let outputOffset = 0;
-            let sourceRelativeOffset = 0;
-            let targetRelativeOffset = 0;
-
-            while (outputOffset < targetSize) {
-                let data = decodeVarInt(patch, offsetObj);
-                let action = data & 3;
-                let length = (data >> 2) + 1;
-
-                if (action === 0) { // SourceRead
-                    output.set(rom.slice(outputOffset, outputOffset + length), outputOffset);
-                    outputOffset += length;
-                }
-                else if (action === 1) { // TargetRead
-                    output.set(patch.slice(offsetObj.offset, offsetObj.offset + length), outputOffset);
-                    offsetObj.offset += length;
-                    outputOffset += length;
-                }
-                else if (action === 2) { // SourceCopy
-                    let relative = decodeVarInt(patch, offsetObj);
-                    sourceRelativeOffset += (relative & 1 ? -1 : 1) * (relative >> 1);
-                    for (let i = 0; i < length; i++) {
-                        output[outputOffset++] = rom[sourceRelativeOffset++];
-                    }
-                }
-                else if (action === 3) { // TargetCopy
-                    let relative = decodeVarInt(patch, offsetObj);
-                    targetRelativeOffset += (relative & 1 ? -1 : 1) * (relative >> 1);
-                    for (let i = 0; i < length; i++) {
-                        output[outputOffset++] = output[targetRelativeOffset++];
-                    }
-                }
-            }
-
-            return output;
-        }
-
-        window.addEventListener("load", async () => {
-            try {
-                const romResponse = await fetch("Tetris (USA).nes");
-                const patchResponse = await fetch("TetrisGYM-6.0.0.bps");
-
-                if (!romResponse.ok || !patchResponse.ok) return;
-
-                const rom = new Uint8Array(await romResponse.arrayBuffer());
-                const patch = new Uint8Array(await patchResponse.arrayBuffer());
-
-                const patched = applyBPS(rom, patch);
-
-                const blob = new Blob([patched], { type: "application/octet-stream" });
-                const url = URL.createObjectURL(blob);
-
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "TetrisGYM-6.0.0.nes";
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-
-            } catch (e) {
-                console.error(e);
-            }
-        });
+        gtag('config', 'G-R1ZCLH6XCR');
     </script>
+    <title>ci's school tips'</title>
+</head>
 
-</body>
-</html>
+<div style='width:100%;height:100%'>
+    <div id='game'></div>
+</div>
+
+<script type='text/javascript'>
+    EJS_player = '#game';
+
+    // Can also be fceumm or nestopia
+    EJS_core = 'nes';
+
+    EJS_lightgun = false; // Lightgun
+
+    // URL to BIOS file
+    EJS_biosUrl = '';
+
+    // URL to Game rom
+    EJS_gameUrl = 'TetrisGYM-6.0.0.nes';
+
+    // Path to the data directory
+    EJS_pathtodata = 'https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/';
+</script>
+<script src='data/loader.js'></script>
+<script src='https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/loader.js'>
+</script>
