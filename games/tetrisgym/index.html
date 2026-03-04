@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>TetrisGYM 6.0.0 Auto Patcher</title>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body style="background:#111;color:white;text-align:center;font-family:Arial">
+<body>
 
-    <h1>TetrisGYM 6.0.0</h1>
-    <p id="status">Applying patch...</p>
-
-    <script src="https://unpkg.com/rom-patcher-js/dist/RomPatcher.webapp.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/marcrobledo/RomPatcher.js/build/RomPatcher.min.js"></script>
 
     <script>
         window.addEventListener("load", async () => {
             try {
-                const status = document.getElementById("status");
-
-                // Fetch original ROM
                 const romResponse = await fetch("Tetris (USA).nes");
-                if (!romResponse.ok) throw new Error("Missing Tetris (USA).nes");
+                if (!romResponse.ok) return;
 
-                // Fetch patch
                 const patchResponse = await fetch("TetrisGYM-6.0.0.bps");
-                if (!patchResponse.ok) throw new Error("Missing TetrisGYM-6.0.0.bps");
-
-                status.textContent = "Processing...";
+                if (!patchResponse.ok) return;
 
                 const romArray = new Uint8Array(await romResponse.arrayBuffer());
                 const patchArray = new Uint8Array(await patchResponse.arrayBuffer());
@@ -36,14 +38,12 @@
                 const a = document.createElement("a");
                 a.href = url;
                 a.download = "TetrisGYM-6.0.0.nes";
+                document.body.appendChild(a);
                 a.click();
+                a.remove();
 
-                status.textContent = "Download started.";
-
-            } catch (err) {
-                document.getElementById("status").textContent =
-                    "Error: " + err.message;
-                console.error(err);
+            } catch (e) {
+                console.error(e);
             }
         });
     </script>
