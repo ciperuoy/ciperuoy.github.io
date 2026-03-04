@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TetrisGYM 6.0.0 Auto Patcher</title>
+</head>
+<body style="background:#111;color:white;text-align:center;font-family:Arial">
+
+    <h1>TetrisGYM 6.0.0</h1>
+    <p id="status">Applying patch...</p>
+
+    <script src="https://unpkg.com/rom-patcher-js/dist/RomPatcher.webapp.js"></script>
+
+    <script>
+        window.addEventListener("load", async () => {
+            try {
+                const status = document.getElementById("status");
+
+                // Fetch original ROM
+                const romResponse = await fetch("Tetris (USA).nes");
+                if (!romResponse.ok) throw new Error("Missing Tetris (USA).nes");
+
+                // Fetch patch
+                const patchResponse = await fetch("TetrisGYM-6.0.0.bps");
+                if (!patchResponse.ok) throw new Error("Missing TetrisGYM-6.0.0.bps");
+
+                status.textContent = "Processing...";
+
+                const romArray = new Uint8Array(await romResponse.arrayBuffer());
+                const patchArray = new Uint8Array(await patchResponse.arrayBuffer());
+
+                const patchedRom = RomPatcher.applyPatch(romArray, patchArray);
+
+                const blob = new Blob([patchedRom], { type: "application/octet-stream" });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "TetrisGYM-6.0.0.nes";
+                a.click();
+
+                status.textContent = "Download started.";
+
+            } catch (err) {
+                document.getElementById("status").textContent =
+                    "Error: " + err.message;
+                console.error(err);
+            }
+        });
+    </script>
+
+</body>
+</html>
