@@ -60,8 +60,25 @@
         <p>2/3/26 - 5/12/26</p>
     </div>
 
+    <!-- Second Screen -->
     <div class="screen" id="thanksScreen">
         <h1 class="thanks">Thanks Platano.</h1>
     </div>
+
+    <script>
+        const ripScreen = document.getElementById("ripScreen");
+        const thanksScreen = document.getElementById("thanksScreen");
+
+        // After 3 seconds, fade out RIP screen
+        setTimeout(() => {
+            ripScreen.classList.remove("show");
+        }, 3000);
+
+        // After another 3 seconds, fade in Thanks screen
+        setTimeout(() => {
+            thanksScreen.classList.add("show");
+        }, 6000);
+    </script>
+
 </body>
 </html>
