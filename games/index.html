@@ -1,304 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ci's school tips</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>R.I.P.</title>
 
     <style>
-        body {
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(-45deg, red, orange);
-            background-size: 400% 400%;
-            animation: fireFade 10s ease infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        @keyframes fireFade {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        /* Wrapper */
-        .wrapper {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Card */
-        .card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            border-radius: 25px;
-            padding: 30px 35px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25), 0 0 25px rgba(255,120,0,0.6);
-        }
-
-        /* Title */
-        h1 {
-            color: white;
-            margin-bottom: 15px;
-        }
-
-        .name-link {
-            color: white;
-            text-decoration: none;
-            transition: 0.3s ease;
-        }
-
-            .name-link:hover {
-                color: cyan;
-                text-shadow: 0 0 8px cyan;
-            }
-
-        .crossed-text {
-            position: relative;
-            opacity: 0.6;
-        }
-
-            .crossed-text::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                top: 50%;
-                width: 100%;
-                height: 2px;
-                background: red;
-                transform: translateY(-50%);
-            }
-
-        /* Search */
-        #searchBar {
-            width: 300px;
-            padding: 12px 18px;
-            margin-bottom: 15px;
-            font-size: 16px;
-            border-radius: 999px;
-            border: none;
-            outline: none;
-        }
-
-        /* Scroll container */
-        .scroll-container {
-            width: 100%;
-            max-width: 320px;
-            height: 400px;
-            overflow-y: auto;
-            border: 2px solid rgba(255,255,255,0.4);
-            border-radius: 20px;
-            background: transparent;
-            padding: 10px;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        /* Buttons */
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 8px;
-            border: none;
-            border-radius: 999px;
-            background: white;
-            color: #333;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.15s ease;
+        body {
+            background: black;
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
         }
 
-            .btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-            }
-
-        /* Announcement Box */
-        .announcement-box {
+        .screen {
             position: absolute;
-            left: 100%;
-            margin-left: 40px;
-            width: 320px;
-            height: 460px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            border-radius: 25px;
-            padding: 25px;
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            inset: 0;
             display: flex;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 2s ease;
         }
 
-            .announcement-box h2 {
-                margin-top: 0;
-                margin-bottom: 10px;
-            }
-
-        #announcementContent {
-            font-size: 14px;
-            line-height: 1.5;
-            white-space: pre-wrap;
+        .show {
+            opacity: 1;
         }
 
-        /* Image fills remaining space */
-        .announcement-image {
-            margin-top: 12px;
-            width: 100%;
-            flex-grow: 1;
-            object-fit: contain;
-            border-radius: 15px;
-        }
-
-        /* Mobile: stack under */
-        @media (max-width: 1100px) {
-            .announcement-box {
-                position: static;
-                margin-left: 0;
-                margin-top: 30px;
-                width: 100%;
-            }
-
-            .wrapper {
-                flex-direction: column;
-            }
-        }
-
-        .msg-btn {
-            position: fixed;
-            bottom: 15px;
-            left: 15px;
-            padding: 10px 18px;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            color: white;
+        h1 {
+            font-size: 4rem;
             font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            transition: 0.2s ease;
-            z-index: 999;
         }
 
-            .msg-btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 12px 25px rgba(0,0,0,0.35);
-            }
+        p {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #bfbfbf;
+        }
+
+        .thanks {
+            font-size: 4rem;
+        }
     </style>
 </head>
-
 <body>
 
-    <div class="wrapper">
+    <!-- First Screen -->
+    <div class="screen show" id="ripScreen">
+        <h1>R.I.P. ciperuoy.github.io</h1>
+        <p>2/3/26 - 5/12/26</p>
+    </div>
 
-        <div class="card">
-
-            <h1>
-                <a href="https://guns.lol/ciperuoy" target="_blank" class="name-link">ciperuoy</a>'s school
-                <span class="crossed-text">tips</span>
-                games
-            </h1>
-
-            <input type="text" id="searchBar" placeholder="Search games...">
-
-            <div class="scroll-container">
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/amongus')">Among Us</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/blackjack')">Blackjack</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bitlife')">BitLife</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/blockblast')">Block Blast</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bloxd')">Bloxd.io</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/deathrun3d')">Death Run 3D</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/driftboss')">Drift Boss</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/e1.8.8')">EaglerCraft 1.8.8</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/fnaf1')">FNAF 1</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/gdash')">Geometry Dash</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/gdsubzero')">GD Subzero</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/slope')">Slope</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/slither')">Slither.io</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/smallwc')">Small World Cup</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/tetristg')">Tetris TenGen</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/totm')">Tomb of The Mask</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/zombs')">Zombs.io</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/chromedino')">Chrome Dino</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/tetris')">Tetris</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bloxycross')">BloxyCross</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/bloxypot')">BloxyPot</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/kirka')">Kirka.io</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/kour')">Kour.io</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/krunker')">Krunker.io</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/tetrisgym')">Tetris GYM</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/retrobowl')">Retro Bowl</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/stickmanhook')">Stickman Hook</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/fnae')">FNAE</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/drivemad')">Drive Mad</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/skribbl')">Skribbl.io</button>
-                <button class="btn" onclick="goTo('https://ciperuoy.github.io/games/subwaysurfers')">Subway Surfers</button>
-            </div>
-
-        </div>
-
-        <div class="announcement-box">
-            <h2>📢 Announcements</h2>
-            <div id="announcementContent">Loading announcements...</div>
-            <img src="https://raw.githubusercontent.com/ciperuoy/ciperuoy.github.io/main/games/thumbsup.png" class="announcement-image">
-        </div>
-
-        <button class="msg-btn" onclick="openMSG()">MSG</button>
+    <!-- Second Screen -->
+    <div class="screen" id="thanksScreen">
+        <h1 class="thanks">Thanks Platano.</h1>
     </div>
 
     <script>
-        function goTo(url) {
-            window.open(url, "_blank");
-        }
+        const ripScreen = document.getElementById("ripScreen");
+        const thanksScreen = document.getElementById("thanksScreen");
 
-        /* Sort buttons */
-        const container = document.querySelector(".scroll-container");
-        const buttons = Array.from(container.querySelectorAll(".btn"));
-        buttons.sort((a, b) => a.textContent.localeCompare(b.textContent));
-        buttons.forEach(btn => container.appendChild(btn));
+        // After 3 seconds, fade out RIP screen
+        setTimeout(() => {
+            ripScreen.classList.remove("show");
+        }, 3000);
 
-        /* Search */
-        document.getElementById("searchBar").addEventListener("keyup", function () {
-            const filter = this.value.toLowerCase();
-            document.querySelectorAll(".btn").forEach(button => {
-                button.style.display = button.textContent.toLowerCase().includes(filter) ? "block" : "none";
-            });
-        });
-
-        /* Fetch announcements */
-        fetch("https://raw.githubusercontent.com/ciperuoy/ciperuoy.github.io/main/games/announcements.txt")
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("announcementContent").textContent = data;
-            })
-            .catch(() => {
-                document.getElementById("announcementContent").textContent = "No announcements available.";
-            });
-
-        function openMSG() {
-            window.open("msg.pdf", "_blank");
-        }
+        // After another 3 seconds, fade in Thanks screen
+        setTimeout(() => {
+            thanksScreen.classList.add("show");
+        }, 6000);
     </script>
 
 </body>
